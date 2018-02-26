@@ -341,14 +341,15 @@ $$\begin{align}
 Taking derivative of $$L_{[\gamma]}$$ w.r.t $$\gamma_i$$:
 
 $$
-\begin{align}
+\begin{displaymath}
     \frac{\partial L}{\partial \gamma_i} = \Psi'(\gamma_i) \Big( \alpha_i + \sum^N_{n=1}\phi_{ni} - \gamma_i \Big) - \Psi'\Big( \sum^k_{j=1} \gamma_i \Big) \sum^k_{j=1} \Big( \alpha_i + \sum^N_{n=1}\phi_{ni} - \gamma_i \Big)
-\begin{align}
+\end{displaymath}
 $$
 
 $$L_{[\gamma]}$$ is maximum when $$\frac{\partial L}{\partial \gamma_i} = 0$$ at:
+
 $$\begin{align}
-    \gamma_i = \alpha_i + \sum^N_{n=1}\phi_{ni}
+    \gamma_i &= \alpha_i + \sum^N_{n=1}\phi_{ni}
 \end{align}$$
 
 \subsubsection{Conlusion of E-step}
