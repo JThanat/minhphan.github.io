@@ -105,11 +105,9 @@ If you think through this process you'll start to find a few funny properties. F
 
 $$
 \begin{align}
-\nabla_{\theta} E_x[f(x)] &= \nabla_{\theta} \sum_x p(x) f(x) & \text{definition of expectation} \\
-& = \sum_x \nabla_{\theta} p(x) f(x) & \text{swap sum and gradient} \\
-& = \sum_x p(x) \frac{\nabla_{\theta} p(x)}{p(x)} f(x) & \text{both multiply and divide by } p(x) \\
-& = \sum_x p(x) \nabla_{\theta} \log p(x) f(x) & \text{use the fact that } \nabla_{\theta} \log(z) = \frac{1}{z} \nabla_{\theta} z \\
-& = E_x[f(x) \nabla_{\theta} \log p(x) ] & \text{definition of expectation}
+        f(x;\alpha, \beta) &= \text{Beta}(\alpha, \beta) \\
+        &=  \frac{1}{\text{B}(\alpha,\beta)} x^{\alpha -1}(1-x)^{\beta-1} \\
+        &= \frac{ \Gamma\big(\alpha + \beta \big)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha -1}(1-x)^{\beta-1},\\
 \end{align}
 $$
 
