@@ -25,7 +25,7 @@ mathjax: true
 
 The purpose of this summary is to 1/ understand main components that build up LDA, the intuition how LDA works, 2/ the maths' derivation the author didn't include in the original paper and 3/the author's code implementation. These three are equally important in order to understand LDA theorically and practically. Let's start to look at the Dirichlet distribution. 
 
-##Dirichlet Distribution
+## Dirichlet Distribution
 
 To understand Dirichlet, let's start with a simpler case where $$K=2$$, the Dirichlet distribution becomes Beta distribution. Let $$X=[X_1,X_2]$$ is the random pmf of $$\text{Beta}(\alpha, \beta)$$. $$X \sim \text{Beta}(\alpha, \beta)$$ when:
 
@@ -105,7 +105,7 @@ Let's try some values of $$(\alpha, \beta)$$ on R to see how the shape changes:
 
 For \figref{fig:beta.curve} we can generalize to the Dirichlet distribution that low $$\mathbf{\alpha}$$ leads to a very low sparse curve in middle with high value at both edges, and high $$\mathbf{\alpha}$$ leads to a high peak. These are the things most of Dirichlet distribution papers uses the simplex to illustrate the density of Dirichlet distribution without explaining the reason behind, this perhaps creating confusion for the reader. This writting of Dirichlet distribution helps for a better understanding of the intuition of Dirichlet distribution and reading LDA papers. Next, we use Dirichlet distribution to formulate LDA's model.
 
-##LDA's model
+## LDA's model
 Let $$k$$ be the latent number of topics, $$D$$ be the number of documents and $$V$$ be the number of terms in the vocabulary. Note that we use $$k$$ not $$K$$ because it's a variable we will sample from the Dirichlet distribution. We use $$\alpha$$ to draw a the distribution of $$k$$ topics over documents $$d$$. And use $$\beta$$ to draw a distribution of topics over words $$w_d$$. We use $$i$$ to index a topic, $$d$$ to index a document, $$j$$ to index a word and $$w$$ to denote a word. In LDA, $$\alpha_{k\times1}$$ and $$\beta_{k\times V}$$ are model parameters, while $$\theta_{D\times k}$$ and $$\mathbf{z}$$ are hidden variables.   
 % We can see that $$\beta$$ has three levels of distribution:  
 % \begin{itemize}
@@ -178,7 +178,7 @@ The main idea is that we use variational expectation-maximization (EM):
     \item (M-step) Maximize the resulting lower bound on the log likelihood with respect to the model parameters $$\alpha$$ and $$\beta$$. This corresponds to finding maximum likelihood estimates with expected sufficient statistics for each document under the approximate posterior which is computed in the E-step.
 \end{enumerate}
 
-##E-step: optimizing values of the variational parameters $$\gamma_d, \phi_d$$}
+## E-step: optimizing values of the variational parameters $$\gamma_d, \phi_d$$}
 \subsubsection{Find a function $$L$$  for the expectation of the log likelihood }
 Let $$f$$ be a convex function, and let $$X$$ be a random variable. Then:
 \begin{equation*}
@@ -360,7 +360,7 @@ Where
 
 with $$\Psi = \frac{d}{dx}\text{log}(\Gamma(x))$$,   the digamma function.
 
-##M-step: maximizing the lower bound with respect to parameters $$\alpha, \beta$$}
+## M-step: maximizing the lower bound with respect to parameters $$\alpha, \beta$$}
 With the set of documents $$D$$ $$\{\mathbf{w}_d\}^M_{d=1}$$ we wish to find parameters $$\alpha$$ and $$\beta$$ that maximize the log likelihood:
 
 $$\begin{align}
@@ -443,7 +443,7 @@ $$\begin{align} \label{eq.hessian}
   \end{algorithmic}
   
 \end{algorithm}
-##Why LDA works?}
+## Why LDA works?}
 Allowing topics sparsity and penalize too many topics of a document:
 \begin{itemize}
     \item When $$\alpha < 1$$, the majority of the probability mass is in the two side-edges of the distribution, generating mostly documents that have only a small number of topics.
@@ -469,7 +469,7 @@ The joint distribution allows our above statements to happen:
 \end{enumerate}
 (1) wants to give form a sparse word clusters, (2) and (3) want to give a small number of topics to a document. The joint distribution encourages a small number of topics but the data itself needs a larger number of topics in order to assign to each document and also to form the diverse topics of all documents. So, as desired, we have a push and pull factor between the joint distribution and the actual data in determining the assignment of topics.
 
-##LDA's code implementation} \label{code}
+## LDA's code implementation} \label{code}
 
 % \lstset
 % { %Formatting for code in appendix
@@ -520,17 +520,7 @@ Similar to what happened in Computer Vision, the progress in RL is not driven as
 
 Now back to RL. Whenever there is a disconnect between how magical something seems and how simple it is under the hood I get all antsy and really want to write a blog post. In this case I've seen many people who can't believe that we can automatically learn to play most ATARI games at human level, with one algorithm, from pixels, and from scratch - and it is amazing, and I've been there myself! But at the core the approach we use is also really quite profoundly dumb (though I understand it's easy to make such claims in retrospect). Anyway, I'd like to walk you through Policy Gradients (PG), our favorite default choice for attacking RL problems at the moment. If you're from outside of RL you might be curious why I'm not presenting DQN instead, which is an alternative and better-known RL algorithm, widely popularized by the [ATARI game playing paper](http://www.nature.com/nature/journal/v518/n7540/abs/nature14236.html). It turns out that Q-Learning is not a great algorithm (you could say that DQN is so 2013 (okay I'm 50% joking)). In fact most people prefer to use Policy Gradients, including the authors of the original DQN paper who have [shown](http://arxiv.org/abs/1602.01783) Policy Gradients to work better than Q Learning when tuned well. PG is preferred because it is end-to-end: there's an explicit policy and a principled approach that directly optimizes the expected reward. Anyway, as a running example we'll learn to play an ATARI game (Pong!) with PG, from scratch, from pixels, with a deep neural network, and the whole thing is 130 lines of Python only using numpy as a dependency ([Gist link](https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5)). Lets get to it.
 
-### Pong from pixels
-
-<div class="imgcap">
-<div style="display:inline-block">
-	<img src="/assets/rl/pong.gif">
-</div>
-<div style="display:inline-block; margin-left: 20px;">
-	<img src="/assets/rl/mdp.png" height="206">
-</div>
-<div class="thecap"><b>Left:</b> The game of Pong. <b>Right:</b> Pong is a special case of a <a href="https://en.wikipedia.org/wiki/Markov_decision_process">Markov Decision Process (MDP)</a>: A graph where each node is a particular game state and each edge is a possible (in general probabilistic) transition. Each edge also gives a reward, and the goal is to compute the optimal way of acting in any state to maximize rewards.</div>
-</div>
+## # Pong from pixels
 
 The game of Pong is an excellent example of a simple RL task. In the ATARI 2600 version we'll use you play as one of the paddles (the other is controlled by a decent AI) and you have to bounce the ball past the other player (I don't really have to explain Pong, right?). On the low level the game works as follows: we receive an image frame (a `210x160x3` byte array (integers from 0 to 255 giving pixel values)) and we get to decide if we want to move the paddle UP or DOWN (i.e. a binary choice). After every single choice the game simulator executes the action and gives us a reward: Either a +1 reward if the ball went past the opponent, a -1 reward if we missed the ball, or 0 otherwise. And of course, our goal is to move the paddle so that we get lots of reward.
 
@@ -622,7 +612,7 @@ The learned agent (in green, right) facing off with the hard-coded AI opponent (
 <img src="/assets/rl/weights.png">
 </div>
 
-### What isn't happening
+## # What isn't happening
 
 So there you have it - we learned to play Pong from from raw pixels with Policy Gradients and it works quite well. The approach is a fancy form of guess-and-check, where the "guess" refers to sampling rollouts from our current policy, and the "check" refers to encouraging actions that lead to good outcomes. Modulo some details, this represents the state of the art in how we currently approach reinforcement learning problems. Its impressive that we can learn these behaviors, but if you understood the algorithm intuitively and you know how it works you should be at least a bit disappointed. In particular, how does it not work?
 
@@ -647,7 +637,7 @@ I'd like to also emphasize the point that, conversely, there are many games wher
 
 In conclusion, once you understand the "trick" by which these algorithms work you can reason through their strengths and weaknesses. In particular, we are nowhere near humans in building abstract, rich representations of games that we can plan within and use for rapid learning. One day a computer will look at an array of pixels and notice a key, a door, and think to itself that it is probably a good idea to pick up the key and reach the door. For now there is nothing anywhere close to this, and trying to get there is an active area of research.
 
-### Non-differentiable computation in Neural Networks
+## # Non-differentiable computation in Neural Networks
 
 I'd like to mention one more interesting application of Policy Gradients unrelated to games: It allows us to design and train neural networks with components that perform (or interact with) non-differentiable computation. The idea was first introduced in [Williams 1992](http://www-anw.cs.umass.edu/~barto/courses/cs687/williams92simple.pdf) and more recently popularized by [Recurrent Models of Visual Attention](http://arxiv.org/abs/1406.6247) under the name "hard attention", in the context of a model that processed an image with a sequence of low-resolution foveal glances (inspired by our own human eyes). In particular, at every iteration an RNN would receive a small piece of the image and sample a location to look at next. For example the RNN might look at position (5,30), receive a small piece of the image, then decide to look at (24, 50), etc. The problem with this idea is that there a piece of network that produces a distribution of where to look next and then samples from it. Unfortunately, this operation is non-differentiable because, intuitively, we don't know what would have happened if we sampled a different location. More generally, consider a neural network from some inputs to outputs:
 
@@ -669,7 +659,7 @@ However, we can use policy gradients to circumvent this problem (in theory), as 
 
 However, with Policy Gradients and in cases where a lot of data/compute is available we can in principle dream big - for instance we can design neural networks that learn to interact with large, non-differentiable modules such as Latex compilers (e.g. if you'd like char-rnn to generate latex that compiles), or a SLAM system, or LQR solvers, or something. Or, for example, a superintelligence might want to learn to interact with the internet over TCP/IP (which is sadly non-differentiable) to access vital information needed to take over the world. That's a great example.
 
-### Conclusions
+## # Conclusions
 
 We saw that Policy Gradients are a powerful, general algorithm and as an example we trained an ATARI Pong agent from raw pixels, from scratch, in [130 lines of Python](https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5). More generally the same algorithm can be used to train agents for arbitrary games and one day hopefully on many valuable real-world control problems. I wanted to add a few more notes in closing:
 
