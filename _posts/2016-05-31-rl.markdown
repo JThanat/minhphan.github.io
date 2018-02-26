@@ -24,7 +24,8 @@ mathjax: true
 \end{figure}
 
 The purpose of this summary is to 1/ understand main components that build up LDA, the intuition how LDA works, 2/ the maths' derivation the author didn't include in the original paper and 3/the author's code implementation. These three are equally important in order to understand LDA theorically and practically. Let's start to look at the Dirichlet distribution. 
-\subsection{Dirichlet Distribution} \label{Dirichlet}
+
+##Dirichlet Distribution
 
 To understand Dirichlet, let's start with a simpler case where $$K=2$$, the Dirichlet distribution becomes Beta distribution. Let $$X=[X_1,X_2]$$ is the random pmf of $$\text{Beta}(\alpha, \beta)$$. $$X \sim \text{Beta}(\alpha, \beta)$$ when:
 
@@ -40,7 +41,7 @@ You can see that the Bionomial distribution has a similar form $$p^k(1-p)^{n-k}$
 > the binomial distribution with parameters n and p is the discrete probability distribution of **the number of successes in a sequence} of n independent experiments, each asking a yes–no question 
 - Binomial distribution, Wikipedia
 
-With a fixed $$x_i=p_i$$, $$\alpha-1=k$$, $$\beta-1=n-k$$, we have $$\alpha+\beta=n-2$$ and $$x^{\alpha -1}(1-x)^{\beta-1} \sim p^k(1-p)^{n-k}$$. Now take an example of throwing a coin of two outcomes head $$\{H\}$$ or tail $$\{T\}$$ \enquote{in sequence or continously}. Let a \enquote{biased} coin with $$\alpha = 100, \beta = 200$$, i.e. $$X=[X_1,X_2]=[100 \text{ } H\text{s},200 \text{ } T\text{s}]$$. The probability of a 100 successful outcome $$H$$ in a 300 sequences of throwing coin with a random probability $$x$$ (of only a single success $$H$$) is  Beta($$\alpha,\beta$$). Now, consider its means:
+With a fixed $$x_i=p_i$$, $$\alpha-1=k$$, $$\beta-1=n-k$$, we have $$\alpha+\beta=n-2$$ and $$x^{\alpha -1}(1-x)^{\beta-1} \sim p^k(1-p)^{n-k}$$. Now take an example of throwing a coin of two outcomes head $$\{H\}$$ or tail $$\{T\}$$ "in sequence or continously}. Let a "biased} coin with $$\alpha = 100, \beta = 200$$, i.e. $$X=[X_1,X_2]=[100 \text{ } H\text{s},200 \text{ } T\text{s}]$$. The probability of a 100 successful outcome $$H$$ in a 300 sequences of throwing coin with a random probability $$x$$ (of only a single success $$H$$) is  Beta($$\alpha,\beta$$). Now, consider its means:
 
 $$
 \begin{align}
@@ -57,7 +58,7 @@ Also the median $$\approx \frac{\alpha - \frac{1}{3}}{\alpha+\beta - \frac{2}{3}
 Note that we put the statement of expected value $$\frac{\alpha}{\alpha+\beta}$$ in order to make a distinction to the bionomial distribution. Let's try this on R software:
 \lstinputlisting[linerange={1-9}, caption=Beta Distribution Illustration,language=R]{Code/R.r}
 
-% Consider a \enquote{biased} coin with initial value $$\alpha = 100, \beta = 200$$. We don't know the mean or $$\text{E}[X_1]$$ but we know $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100}{100+200} = \frac{1}{3} \approx 0.33$$. If we continue to throw the coin 10 times, we get $$H$$ 2 times and $$T$$ 8 times. We adjust $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100 + 2}{100+2+200+8} \approx 0.32 $$. If we continue to throw 1000 times, $$\text{E}[X_1]$$ will probabilty close to $$\frac{\alpha}{\alpha+\beta}= \frac{100}{100+200}$$.
+% Consider a "biased} coin with initial value $$\alpha = 100, \beta = 200$$. We don't know the mean or $$\text{E}[X_1]$$ but we know $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100}{100+200} = \frac{1}{3} \approx 0.33$$. If we continue to throw the coin 10 times, we get $$H$$ 2 times and $$T$$ 8 times. We adjust $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100 + 2}{100+2+200+8} \approx 0.32 $$. If we continue to throw 1000 times, $$\text{E}[X_1]$$ will probabilty close to $$\frac{\alpha}{\alpha+\beta}= \frac{100}{100+200}$$.
 
 
 \begin{figure}[h]
@@ -67,7 +68,7 @@ Note that we put the statement of expected value $$\frac{\alpha}{\alpha+\beta}$$
     \label{fig:curve}
 \end{figure}
 
-Now if your friend come to you and tell that he's writting a game for people to roll a 6-sides dice. He has observed that the set of sides  $$\{i\}^{K=6}_{i=1}$$, such that side $$i$$th appears $$\alpha_i$$ times in every sequence of $$\sum^6_{j=1}\alpha_i$$ with the probability of $$\alpha_i/\sum^6_{j=1}\alpha_i$$. This has been drawing a large number of people to play. Now he needs you to develop an algorithm to build such a \enquote{loaded} dice. How can you solve this? You have a set of outcomes of rolling a 6-sides dice $$X=[X_1,X_2,X_3,X_4,X_5,X_6]$$ and you know the prior mean value of each outcome $$\text{E}[X_i] = \alpha_i/\sum^6_{j=1}\alpha_i$$. You wish that if the dice only has 2 sides so you can use Beta distribution to solve your problem right away. Fortunately, this is where the Dirichlet distribution comes to the rescue. It's the expansion form of Beta distribution for $$K > 2$$.
+Now if your friend come to you and tell that he's writting a game for people to roll a 6-sides dice. He has observed that the set of sides  $$\{i\}^{K=6}_{i=1}$$, such that side $$i$$th appears $$\alpha_i$$ times in every sequence of $$\sum^6_{j=1}\alpha_i$$ with the probability of $$\alpha_i/\sum^6_{j=1}\alpha_i$$. This has been drawing a large number of people to play. Now he needs you to develop an algorithm to build such a "loaded} dice. How can you solve this? You have a set of outcomes of rolling a 6-sides dice $$X=[X_1,X_2,X_3,X_4,X_5,X_6]$$ and you know the prior mean value of each outcome $$\text{E}[X_i] = \alpha_i/\sum^6_{j=1}\alpha_i$$. You wish that if the dice only has 2 sides so you can use Beta distribution to solve your problem right away. Fortunately, this is where the Dirichlet distribution comes to the rescue. It's the expansion form of Beta distribution for $$K > 2$$.
 
 \hfill \break
 With a set of outcomes $$X=[X_1,X_2,\dots,X_K]$$ be the random pmf, $$X \sim \text{Dir}(\alpha)$$ when:
@@ -104,7 +105,7 @@ Let's try some values of $$(\alpha, \beta)$$ on R to see how the shape changes:
 
 For \figref{fig:beta.curve} we can generalize to the Dirichlet distribution that low $$\mathbf{\alpha}$$ leads to a very low sparse curve in middle with high value at both edges, and high $$\mathbf{\alpha}$$ leads to a high peak. These are the things most of Dirichlet distribution papers uses the simplex to illustrate the density of Dirichlet distribution without explaining the reason behind, this perhaps creating confusion for the reader. This writting of Dirichlet distribution helps for a better understanding of the intuition of Dirichlet distribution and reading LDA papers. Next, we use Dirichlet distribution to formulate LDA's model.
 
-\subsection{LDA's model}
+##LDA's model
 Let $$k$$ be the latent number of topics, $$D$$ be the number of documents and $$V$$ be the number of terms in the vocabulary. Note that we use $$k$$ not $$K$$ because it's a variable we will sample from the Dirichlet distribution. We use $$\alpha$$ to draw a the distribution of $$k$$ topics over documents $$d$$. And use $$\beta$$ to draw a distribution of topics over words $$w_d$$. We use $$i$$ to index a topic, $$d$$ to index a document, $$j$$ to index a word and $$w$$ to denote a word. In LDA, $$\alpha_{k\times1}$$ and $$\beta_{k\times V}$$ are model parameters, while $$\theta_{D\times k}$$ and $$\mathbf{z}$$ are hidden variables.   
 % We can see that $$\beta$$ has three levels of distribution:  
 % \begin{itemize}
@@ -117,42 +118,38 @@ Given these distributions, the LDA generative process is as follows:
 
 
 * For each documents:
-    + Choose a distribution $$d_1$$ over topics, for example \enquote{70\% topic A, 20\% topic B, 10\% topic C}.
+    + Choose a distribution $$d_1$$ over topics, for example "70\% topic A, 20\% topic B, 10\% topic C}.
     + For each word in the document:
         + Draw a topic $$i$$ in one of the $$k$$ topics with a distribution $$d_2$$ conditioned on $$d_1$$. For example, if we pick topic A, the document will have 70\% chance of containing topic A.
         + Draw a word amongst many words in topic $$i$$ with a distibution $$d_3$$ conditioned on $$d_2$$.
 
 
 This model shows that:
-\begin{itemize}
-    \item A document contains a mixture of topics. For example, document $$d$$ contains \enquote{70\% topic A, 20\% topic B, 10\% topic C}.
-    \item A topic contains a mixture of words. \enquote{Education} might contain words like \enquote{school}, \enquote{teachers}, \enquote{elementary}.
-\end{itemize}
+
+* A document contains a mixture of topics. For example, document $$d$$ contains "70\% topic A, 20\% topic B, 10\% topic C".
+* A topic contains a mixture of words. "Education" might contain words like "school", "teachers", "elementary".
 
 After having a rough understanding, we formalize the above process as follows:
 
-\begin{enumerate}
-    \item For each topic $$i$$ in $$k$$
-    \begin{enumerate}
-        \item Draw a topic distribution over words $$\phi_i \sim$$ Dir($$\beta$$). 
-    \end{enumerate}
-    \item For each word $$n$$ in the document $$d$$:
-     \begin{enumerate}
-        \item Draw a topic distribution over documents, $$\theta_d \sim $$ Dir($$\alpha$$)  
-        \item For each word in the document:
-        \begin{enumerate}
-            \item Draw a specific topic $$z_{d,n} \sim$$ multi($$\theta$$)
-            \item Draw a word $$w_{d,n} \sim \beta_{z_{d,n}}$$,
-        \end{enumerate}
-    \end{enumerate}
-\end{enumerate}
+
+* For each topic $$i$$ in $$k$$
+
+    + Draw a topic distribution over words $$\phi_i \sim$$ Dir($$\beta$$). 
+
+    + For each word $$n$$ in the document $$d$$:
+
+        + Draw a topic distribution over documents, $$\theta_d \sim $$ Dir($$\alpha$$)  
+        + For each word in the document:
+            + Draw a specific topic $$z_{d,n} \sim$$ multi($$\theta$$)
+            + Draw a word $$w_{d,n} \sim \beta_{z_{d,n}}$$,
+
 where $$\phi_i$$ the probability over the vocabulary generated by latent topic $$i$$, Dir($$\alpha$$) is a draw from a uniform Dirichlet distribution with parameter $$\alpha$$ and multi(.) is a Multinomial distribution. Note that $$w_{d,n} \sim   p(w_{d,n}|z_{d,n},\beta_i) = \beta_{z_{d,n},i} = \beta_{z_{d,n}}$$, because $$z_n$$ is already $$i$$ we have picked from the beginning. The subsript $$n,d$$ or $$d$$ is just to express that we're only considering the word $$n$$ and document $$d$$. 
 
 \hfill \break
 **Why Dirichlet?**
-The LDA generative process has 3-levels of distribution. The distribution $$d_1$$ is actually a Dirichlet distribution. Similarly to the multinomial distribution, from the pmf itself $$\frac{n!}{\prod x_i}\prod p_i^{x_i}$$, each topic with probability $$p_i$$ can appear $$x_i$$ times in all the corpus $$D$$. And the author also stated that \enquote{The Dirichlet is a convenient distribution on the simplex — it is in the **exponential family}, has **finite dimensional} sufficient statistics, and is **conjugate to the multinomial distribution}}. 
+The LDA generative process has 3-levels of distribution. The distribution $$d_1$$ is actually a Dirichlet distribution. Similarly to the multinomial distribution, from the pmf itself $$\frac{n!}{\prod x_i}\prod p_i^{x_i}$$, each topic with probability $$p_i$$ can appear $$x_i$$ times in all the corpus $$D$$. And the author also stated that "The Dirichlet is a convenient distribution on the simplex — it is in the **exponential family}, has **finite dimensional} sufficient statistics, and is **conjugate to the multinomial distribution}}. 
 % https://tex.stackexchange.com/questions/64371/direct-quotations-and-entire-paragraph-quotations
-\blockquote{\enquote{For example, it models the probability of counts for rolling a $$k$$-sided dice $$n$$ times. For $$n$$ independent trials each of which leads to a success for exactly one of $$k$$ categories, with each category having a given fixed success probability, the multinomial distribution gives the probability of any particular combination of numbers of successes for the various categories.} - Multinomial distribution, Wikipedia.}
+\blockquote{"For example, it models the probability of counts for rolling a $$k$$-sided dice $$n$$ times. For $$n$$ independent trials each of which leads to a success for exactly one of $$k$$ categories, with each category having a given fixed success probability, the multinomial distribution gives the probability of any particular combination of numbers of successes for the various categories.} - Multinomial distribution, Wikipedia.}
 where $$n$$ is the number of times all topics appear in a corpus, $$k$$ categorical is the number of topics. The multinomial distribution can express partially the distribution of topics in a corpus, and Dirichlet is conjugate to it.
 
 \hfill \break
@@ -181,7 +178,7 @@ The main idea is that we use variational expectation-maximization (EM):
     \item (M-step) Maximize the resulting lower bound on the log likelihood with respect to the model parameters $$\alpha$$ and $$\beta$$. This corresponds to finding maximum likelihood estimates with expected sufficient statistics for each document under the approximate posterior which is computed in the E-step.
 \end{enumerate}
 
-\subsection{E-step: optimizing values of the variational parameters $$\gamma_d, \phi_d$$}
+##E-step: optimizing values of the variational parameters $$\gamma_d, \phi_d$$}
 \subsubsection{Find a function $$L$$  for the expectation of the log likelihood }
 Let $$f$$ be a convex function, and let $$X$$ be a random variable. Then:
 \begin{equation*}
@@ -215,61 +212,48 @@ $$\begin{align} \label{eq.4.3}
 \subsubsection{Optimize $$L$$}
 Expand \eqref{eq.4.4}:
 
-$$\begin{align} \label{eq.4.5}
-    \begin{align}
-        L(\gamma,\phi;\alpha,\beta) &= \text{E}_q[\text{log}p(\theta |\alpha)] + \text{E}_q[\text{log}p(\mathbf{z}|\theta)] + \text{E}_q[\text{log}p(\mathbf{w}|\mathbf{z},\beta)] \\
-        &- \text{E}_q[\text{log}p(\theta)] - \text{E}_q[\text{log}p(\mathbf{z})]    
-    \end{align}
-\end{align}$$
+$$ 
+\begin{align}
+    L(\gamma,\phi;\alpha,\beta) &= \text{E}_q[\text{log}p(\theta |\alpha)] + \text{E}_q[\text{log}p(\mathbf{z}|\theta)] + \text{E}_q[\text{log}p(\mathbf{w}|\mathbf{z},\beta)] \\
+    &- \text{E}_q[\text{log}p(\theta)] - \text{E}_q[\text{log}p(\mathbf{z})]    
+\end{align}
+$$
 
 Consider the first term:
-\begin{equation*}
-    \begin{align}
-        & \text{E}_q[\text{log}p(\theta |\alpha)] \\
-        &= \text{E}_q[\text{log}\Big(\text{exp}\Big\{\Big(\sum^k_{j=1}(\alpha_i -1)\text{log}\theta_i \Big)  \Big\} + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
-    - \sum^k_{i=1}\text{log}\Gamma(\alpha_i) \Big\} \Big)] \\
-    &= \Big(\sum^k_{i=1}(\alpha_i - 1)\text{E}_q[\text{log}\theta_i]\Big) + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
-    - \sum^k_{i=1}\text{log}\Gamma(\alpha_i) \\
-    &= \Bigg(\sum^k_{i=1}(\alpha_i - 1)\Big(\Psi(\alpha_i) - \Psi \Big(\sum^k_{j=1}\alpha_j\Big) \Big)\Bigg) + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
-    - \sum^k_{i=1}\text{log}\Gamma(\alpha_i).
-    \end{align}
-\end{equation*}
-
+$$
+\begin{align}
+    & \text{E}_q[\text{log}p(\theta |\alpha)] \\
+    &= \text{E}_q[\text{log}\Big(\text{exp}\Big\{\Big(\sum^k_{j=1}(\alpha_i -1)\text{log}\theta_i \Big)  \Big\} + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
+- \sum^k_{i=1}\text{log}\Gamma(\alpha_i) \Big\} \Big)] \\
+&= \Big(\sum^k_{i=1}(\alpha_i - 1)\text{E}_q[\text{log}\theta_i]\Big) + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
+- \sum^k_{i=1}\text{log}\Gamma(\alpha_i) \\
+&= \Bigg(\sum^k_{i=1}(\alpha_i - 1)\Big(\Psi(\alpha_i) - \Psi \Big(\sum^k_{j=1}\alpha_j\Big) \Big)\Bigg) + \text{log}\Gamma \Big( \sum^k_{i=1} \alpha_i \Big)
+- \sum^k_{i=1}\text{log}\Gamma(\alpha_i).
+\end{align}
+$$
 Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, otherwise $$z_{n,i} = 0$$. $$p(z_n|\theta)$$ is simply $$\theta_i$$ when $$z_{n,i}=1$$. Let $$p(z_{n,i}|\theta_i) =  \theta_i^{z_{n,i}}$$ for the unique $$i$$ so that: 
 
-$$\begin{align} \label{eq.8.5}
-    \begin{align}
+$$\begin{align} 
+
     \text{log}p(z_{n,i}|\theta_i) &= \text{log}\theta_i^{z_{n,i}} \\
     &= {z_{n,i}}\text{log}\theta_i.
-    % &=
-    % \begin{cases}
-    %   1, & \text{if } z_{n,i} = 1 \\
-    % 0, & \text{if } z_{n,i} = 0.
-    % \end{cases}
-    \end{align}
+
+
 \end{align}$$
 
-% \[
-% \text{log}p(z_n|\theta) = 
-%     \begin{cases}
-%       1, & \text{if } z_{n,i} = 1 \\
-%     0, & \text{if } z_{n,i} = 0.
-%     \end{cases}
-% \]
+
 
 % $$\text{log}p(z_n|\theta) = \text{log}\theta_i^{z_{n,i}} = {z_{n,i}}\text{log}\theta_i$$ takes the value of 1 if $$z_{n,i} = 1$$ and $$0$$ otherwise. 
 Expand the second term:
 
-\begin{equation*}
-    \begin{align}
+$$\begin{align}
     \text{E}_q[\text{log}p(\mathbf{z}|\theta)] &= \sum^N_{n=1}\text{E}_q[\text{log}p(\mathbf{z}_n|\theta)]\\
     &= \sum^N_{n=1}\sum^k_{i=1}\text{E}_q[\text{log}p(\mathbf{z}_{n,i}|\theta_i)]\\
     &= \sum^N_{n=1}\sum^k_{i=1}\text{E}_q[ \text{log}\theta_i^{z_{n,i}}] \\
     &= \sum^N_{n=1}\sum^k_{i=1}\text{E}_q[ z_{n,i}\text{log}\theta_i] \\
     &= \sum^N_{n=1}\sum^k_{i=1}\text{E}_q [z_{n,i}]\text{E}_q[\text{log}\theta_i]\\
     &= \sum^N_{n=1}\sum^k_{i=1}\phi_{ni} \Big( \Psi(\gamma_i) - \Psi \Big(\sum^k_{j=1}\gamma_i \Big) \Big).
-    \end{align}
-\end{equation*}
+\end{align}$$
 
 % $$\text{log}p(\mathbf{w|z},\beta) = \text{log}\beta_i^{z_{n,i}.w_{n,j}} = {z_{n,i}.w_{n,j}}\text{log}\theta_i$$.
 Let $$\beta_{ij} = p(w_{n,j}=1|z_i=1)$$, recall that each $$w_n$$ is a vector of size $$V$$ with exactly one component equal to one; we can select the unique $$j$$ such that $$w_{n,j}$$ = 1. Constraint similiarly to \eqref{eq.8.5}, we have:
@@ -287,26 +271,22 @@ $$\begin{align}
 
 
 Third term:
-\begin{equation*}
-    \begin{align}
+$$\begin{align}
         \text{E}_q[\text{log}p(\mathbf{w|z},\beta) &= \sum^N_{n=1} \text{E}_q[\text{log}p(w_n|z_n,\beta)] \\
          &= \sum^N_{n=1}\sum^k_{i=1}\sum^V_{j=1}\text{E}_q[\text{log}p(w_{n,j}|z_{n,i},\beta_{ij})]\\
         &= \sum^N_{n=1}\sum^k_{i=1}\sum^V_{j=1}\text{E}_q[\text{log}\beta_{ij}^{z_{n,i}.w_{n,j}}] \\
         &=  \sum^N_{n=1}\sum^k_{i=1}\sum^V_{j=1}\text{E}_q[z_{n,i}]\text{E}_q[w_{n,j}]\text{E}_q[\text{log}\beta_{ij}]\\
         &= \sum^N_{n=1}\sum^k_{i=1}\sum^V_{j=1} \phi_{n,i}w_{n,j}\text{log}\beta_{ij}.\\
-    \end{align}
-\end{equation*}
+\end{align}$$
 
 Expand the fourth term similarly the first term (just change $$\alpha$$ to $$\gamma$$) and fifth terms, we have:
-\begin{equation*}
-    \begin{align}
+$$\begin{align}
     &- \text{E}_q[\text{log}p(\theta)] - \text{E}_q[\text{log}p(\mathbf{z})] \\
     &= \text{E}_q[\text{log}p(\theta|\gamma)] - \text{E}_q[\text{log}p(\mathbf{z}|\phi)] \\ 
     &= -\Bigg(\sum^k_{i=1}(\gamma_i - 1)\Big(\Psi(\gamma) - \Psi \Big(\sum^k_{j=1}\gamma_j\Big) \Big)\Bigg) + \text{log}\Gamma \Big( \sum^k_{i=1} \gamma_i \Big)
     - \sum^k_{i=1}\text{log}\Gamma(\gamma_i) \\
     &- \sum^N_{n=1}\sum^k_{i=1}\phi_{ni}\text{log}\phi_{ni}.
-    \end{align}
-\end{equation*}
+\end{align}$$
 % \hfill \break
 % Replace RHS of \eqref{eq.8.4} to $$\text{log}\theta_i$$ in \eqref{eq.8.2} we have $$p(\theta|\alpha)$$, therefore easily infer $$\text{E}_q[\text{log}p(\theta |\alpha)]$$. We can also infer other terms of \eqref{eq.4.5} that include $$\text{log}\theta_i$$. Expand the equation above, each line corresponds to each of five terms of \eqref{eq.4.5}:
 
@@ -345,13 +325,11 @@ $$\begin{align}
 \subsubsection*{Maximize $$L$$ w.r.t $$\gamma$$}
 Keep terms in Eq.(8.4) that contain $$\gamma_i$$:
 
-\begin{equation*}
-    \begin{align}
+$$\begin{align}
         L_{[\gamma]} &= \sum^k_{i=1}( \alpha_i - 1 ) \Big(\Psi(\gamma_i) - \Psi\Big(\sum^k_{j=1}\gamma_i \Big)\Big) + \sum^N_{n=1}\phi_{ni}\Big(\Psi(\gamma_i) - \Psi\Big(\sum^k_{j=1}\gamma_i \Big)\Big) \\
         &- \text{log}\Gamma \Big( \sum^k_{j=1}\gamma_i \Big) + \text{log}\Gamma(\gamma_i) - \sum^k_{i=1}(\gamma_i - 1) \Big(\Psi(\gamma_i) - \Psi\Big(\sum^k_{j=1}\gamma_i \Big)\Big) \\
         &= \sum^k_{i=1} \Big(\Psi(\gamma_i) - \Psi\Big(\sum^k_{j=1}\gamma_i \Big)\Big) \Big( \alpha_i + \sum^N_{n=1}\phi_{ni} - \gamma_i \Big) - \text{log}\Gamma \Big(\sum^k_{j=1}\gamma_i \Big) + \text{log}\Gamma(\gamma_i)
-    \end{align}
-\end{equation*}
+\end{align}$$
 
 Taking derivative of $$L_{[\gamma]}$$ w.r.t $$\gamma_i$$:
 
@@ -382,7 +360,7 @@ Where
 
 with $$\Psi = \frac{d}{dx}\text{log}(\Gamma(x))$$,   the digamma function.
 
-\subsection{M-step: maximizing the lower bound with respect to parameters $$\alpha, \beta$$}
+##M-step: maximizing the lower bound with respect to parameters $$\alpha, \beta$$}
 With the set of documents $$D$$ $$\{\mathbf{w}_d\}^M_{d=1}$$ we wish to find parameters $$\alpha$$ and $$\beta$$ that maximize the log likelihood:
 
 $$\begin{align}
@@ -465,7 +443,7 @@ $$\begin{align} \label{eq.hessian}
   \end{algorithmic}
   
 \end{algorithm}
-\subsection{Why LDA works?}
+##Why LDA works?}
 Allowing topics sparsity and penalize too many topics of a document:
 \begin{itemize}
     \item When $$\alpha < 1$$, the majority of the probability mass is in the two side-edges of the distribution, generating mostly documents that have only a small number of topics.
@@ -491,7 +469,7 @@ The joint distribution allows our above statements to happen:
 \end{enumerate}
 (1) wants to give form a sparse word clusters, (2) and (3) want to give a small number of topics to a document. The joint distribution encourages a small number of topics but the data itself needs a larger number of topics in order to assign to each document and also to form the diverse topics of all documents. So, as desired, we have a push and pull factor between the joint distribution and the actual data in determining the assignment of topics.
 
-\subsection{LDA's code implementation} \label{code}
+##LDA's code implementation} \label{code}
 
 % \lstset
 % { %Formatting for code in appendix
