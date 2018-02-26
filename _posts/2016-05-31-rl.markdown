@@ -87,7 +87,7 @@ The Dirichlet distribution also looks something similar to multinomial distribut
 
 \lstinputlisting[linerange={11-16}, caption=Sample from Dirichlet distribution with $$K=2$$,language=R]{Code/R.r}
 
-From our new definition, if we have a corpus $$D$$ with $$K$$ topic, to find a distribution of $$\alpha_i$$ times of topic $$i$$th appears with a probability $$p_i$$ such that all topics' probabilities $$\sum^K_{i=1}p_i=1$$, we can use Dirichlet distribution to build up a LDA model.
+From our new definition, if we have a corpus $$D$$ with $$K$$ topics, to find a distribution of $$\alpha_i$$ times of topic $$i$$th appears with a probability $$p_i$$ such that all topics' probabilities $$\sum^K_{i=1}p_i=1$$, we can use Dirichlet distribution to build up a LDA model.
 
 
 The last thing we might need to consider another aspect of the distribution; its variance:
@@ -240,7 +240,7 @@ $$
 
 Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, otherwise $$z_{n,i} = 0$$. 
 
-$$p(z_n|\theta)$$ is simply $$\theta_i$$ when $$z_{n,i}=1$$. 
+\$\$p(z_n|\theta)$$  is simply  \$\$\theta_i$$  when  \$\$z_{n,i}=1$$. 
 
 Let $$p(z_{n,i}|\theta_i) =$$  $$\theta_i^{z_{n,i}}$$ for the unique i so that: 
 
@@ -358,7 +358,7 @@ $$\begin{align}
     \gamma_i = \alpha_i + \sum^N_{n=1}\phi_{ni}
 \end{align}$$
 
-#### Conlusion of E-step}
+#### Conlusion of E-step
 The optimal $$\gamma^\ast,\phi^\ast$$ is found: 
 $$\begin{align} \label{eq.4.12}
     \phi_{ni} \propto \beta_{iw_n}\text{exp}\{\text{E}_q[\text{log}\theta_i|\gamma]\}
