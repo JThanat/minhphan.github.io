@@ -240,11 +240,10 @@ $$
 \end{align}
 $$
 
-Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, 
+Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, otherwise $$z_{n,i} = 0$$. 
+$$p(z_n|\theta)$$ \text{is simply} $$\theta_i$$ \text{when} $$z_{n,i}=1$$. 
 
-otherwise $$z_{n,i} = 0$$. $$p(z_n|\theta)$$ is simply $$\theta_i$$ when $$z_{n,i}=1$$. 
-
-Let $$p(z_{n,i}|\theta_i) =  \theta_i^{z_{n,i}}$$ for the unique $$i$$ so that: 
+Let $$p(z_{n,i}|\theta_i) =  \theta_i^{z_{n,i}}$$ \text{for the unique} $$i$$ \text{so that}: 
 
 $$\begin{align} 
 
