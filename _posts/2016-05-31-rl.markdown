@@ -43,30 +43,22 @@ You can see that the Bionomial distribution has a similar form $$p^k(1-p)^{n-k}$
 With a fixed $$x_i=p_i$$, $$\alpha-1=k$$, $$\beta-1=n-k$$, we have $$\alpha+\beta=n-2$$ and $$x^{\alpha -1}(1-x)^{\beta-1} \sim p^k(1-p)^{n-k}$$. Now take an example of throwing a coin of two outcomes head $$\{H\}$$ or tail $$\{T\}$$ \enquote{in sequence or continously}. Let a \enquote{biased} coin with $$\alpha = 100, \beta = 200$$, i.e. $$X=[X_1,X_2]=[100 \text{ } H\text{s},200 \text{ } T\text{s}]$$. The probability of a 100 successful outcome $$H$$ in a 300 sequences of throwing coin with a random probability $$x$$ (of only a single success $$H$$) is  Beta($$\alpha,\beta$$). Now, consider its means:
 
 $$
-\begin{equation} 
-    \begin{align}
-        \mu = \text{E}[X_1] &= \int^1_0 xf(x;\alpha, \beta)dx \\
-        &= \int^1_0 \frac{x^{\alpha -1}(1-x)^{\beta-1}}{ \text{B}(\alpha,\beta) }\\
-        &= \frac{\alpha}{\alpha+\beta},
-    \end{align}
-\end{equation}
+\begin{align}
+    \mu = \text{E}[X_1] &= \int^1_0 xf(x;\alpha, \beta)dx \\
+    &= \int^1_0 \frac{x^{\alpha -1}(1-x)^{\beta-1}}{ \text{B}(\alpha,\beta) }\\
+    &= \frac{\alpha}{\alpha+\beta},
+\end{align}
 $$
 
 Also the median $$\approx \frac{\alpha - \frac{1}{3}}{\alpha+\beta - \frac{2}{3}}$$, for $$\alpha,\beta \geq 1$$. With whatever the shape of this distribution is, its mean and median should be those numbers. The Beta distribution is simply defined with $$\alpha + \beta$$ experiments, with random variable of a single success outcome probability $$x$$, the expectation $$\text{E}[X_1=\alpha \text{ times of } x]=\frac{\alpha}{\alpha+\beta}$$. We can re-state our definition as: 
-\begin{quote}
-    The Beta distribution with parameter $$\alpha$$ and $$\beta$$ is the discrete probability distribution of $$\alpha$$ times successful outcomes with a random variable $$x$$ in a sequence of $$\alpha + \beta$$ independent experiments with a probability of $$\frac{\alpha}{\alpha+\beta}$$.
-\end{quote}
+
+> The Beta distribution with parameter $$\alpha$$ and $$\beta$$ is the discrete probability distribution of $$\alpha$$ times successful outcomes with a random variable $$x$$ in a sequence of $$\alpha + \beta$$ independent experiments with a probability of $$\frac{\alpha}{\alpha+\beta}$$.
+
 Note that we put the statement of expected value $$\frac{\alpha}{\alpha+\beta}$$ in order to make a distinction to the bionomial distribution. Let's try this on R software:
 \lstinputlisting[linerange={1-9}, caption=Beta Distribution Illustration,language=R]{Code/R.r}
 
 % Consider a \enquote{biased} coin with initial value $$\alpha = 100, \beta = 200$$. We don't know the mean or $$\text{E}[X_1]$$ but we know $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100}{100+200} = \frac{1}{3} \approx 0.33$$. If we continue to throw the coin 10 times, we get $$H$$ 2 times and $$T$$ 8 times. We adjust $$\text{E}[X_1] = \frac{\alpha}{\alpha+\beta}= \frac{100 + 2}{100+2+200+8} \approx 0.32 $$. If we continue to throw 1000 times, $$\text{E}[X_1]$$ will probabilty close to $$\frac{\alpha}{\alpha+\beta}= \frac{100}{100+200}$$.
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=9cm]{mean.png}
-%     \caption{Sampling from Beta Distribution $$(\alpha, \beta) = (100,200)$$}
-%     \label{fig:curve}
-% \end{figure}
 
 \begin{figure}[h]
     \centering
@@ -79,18 +71,14 @@ Now if your friend come to you and tell that he's writting a game for people to 
 
 \hfill \break
 With a set of outcomes $$X=[X_1,X_2,\hdots,X_K]$$ be the random pmf, $$X \sim \text{Dir}(\alpha)$$ when:
-
-\begin{equation} 
-    \begin{align}
-        f(\boldm{x},\boldm{\alpha}) &=  \frac{1}{\text{B}(\boldm{\alpha})} \prod^K_{i=1} x_i^{\alpha_i - 1} \\
-        &= \frac{ \Gamma\big(\sum^K_{i=1} \alpha_i \big)}{\prod^K_{i=1}\Gamma(\alpha_i)}\prod^K_{i=1} x_i^{\alpha_i - 1},\\
-    \end{align}
-\end{equation}
-
+$$
+\begin{align}
+    f(\boldm{x},\boldm{\alpha}) &=  \frac{1}{\text{B}(\boldm{\alpha})} \prod^K_{i=1} x_i^{\alpha_i - 1} \\
+    &= \frac{ \Gamma\big(\sum^K_{i=1} \alpha_i \big)}{\prod^K_{i=1}\Gamma(\alpha_i)}\prod^K_{i=1} x_i^{\alpha_i - 1},\\
+\end{align}
+$$
 where $$\Gamma(.)$$ is the gamma function, for positive integer $$n$$, $$\Gamma(n) = (n-1)!$$. We can also re-define the definition of Dirichlet distribution:
-\begin{quote}
-    The Dirichlet distribution with parameters $$\{\alpha_i\}^K_{i=1}$$ is the discrete probability distribution of $$\alpha_i$$ times successful outcomes with a random variable $$x_i$$ in a sequence of $$\sum^K_{j=1}\alpha_j$$ independent experiments with a probability of $$\alpha_i/\sum^K_{j=1}\alpha_j$$. 
-\end{quote}
+>  The Dirichlet distribution with parameters $$\{\alpha_i\}^K_{i=1}$$ is the discrete probability distribution of $$\alpha_i$$ times successful outcomes with a random variable $$x_i$$ in a sequence of $$\sum^K_{j=1}\alpha_j$$ independent experiments with a probability of $$\alpha_i/\sum^K_{j=1}\alpha_j$$.
 
 The Dirichlet distribution also looks something similar to multinomial distribution, but instead of in the form $$\prod^K_{i=1} p_i^{x_i - 1}$$ it takes $$\prod^K_{i=1} x_i^{\alpha_i - 1}$$. You can use R to sample from Dirichlet distribution:
 
@@ -178,15 +166,18 @@ where $$n$$ is the number of times all topics appear in a corpus, $$k$$ categori
 \hfill \break
 Next, to solve the problem of LDA we need to compute:
 
-\begin{equation} \label{eq.4.1}
+$$
+\begin{align} \label{eq.4.1}
     p(\theta,\boldm{z}|\boldm{w},\alpha,\beta) = \frac{p(\theta,\boldm{z},\boldm{w}|\alpha,\beta)}{ p(\boldm{w}|\alpha,\beta)}.
-\end{equation}
+\end{align}
+$$
 
 However, this distribution is intractable to compute. That's where Variational Inference comes about. The idea of Variational Inference is to find and optimize a closest family to the posterior by making use of Jensen’s inequality to obtain an adjustable lower bound on the log likelihood. Because we are only interested in a family ($$\gamma,\phi$$) closest to ($$\theta, \boldm{z}$$), we can drop some edges and nodes of \figref{fig.1} to simplify \eqref{eq.4.1} as below:
 
-\begin{equation} \label{eq.4.2}
+$$
+\begin{align} \label{eq.4.2}
     q(\theta,\boldm{z} | \gamma,\phi) = q(\theta|\gamma)\prod_{n=1}^{N}q(z_n|\phi_n)
-\end{equation}
+\end{align}$$
 
 The main idea is that we use variational expectation-maximization (EM):
 \begin{enumerate}
@@ -203,7 +194,7 @@ Let $$f$$ be a convex function, and let $$X$$ be a random variable. Then:
 
 Using Jensen's inequality we have:
 
-\begin{equation}
+$$\begin{align}
     \begin{align}
         \text{log}p(\boldm{w}|\alpha,\beta) &= \text{log}\int\sum_{\boldm{z}}p(\theta, \boldm{z}, \boldm{w}|\alpha,\beta)d\theta \\
         &= \text{log}\int\sum_{\boldm{z}} \frac{p(\theta, \boldm{z}, \boldm{w}|\alpha,\beta)q(\theta,\boldm{z})}{q(\theta,\boldm{z})} d\theta \\
@@ -211,29 +202,29 @@ Using Jensen's inequality we have:
           &= \text{E}_q[\text{log}p(\theta, \boldm{z}, \boldm{w}|\alpha,\beta)] - \text{E}_q[\text{log}q(\theta, \boldm{z})]
     \end{align}
     \label{eq:x=2=1+1}
-\end{equation}
+\end{align}$$
 
 \hfill \break
 The difference between LHS and RHS of Eq.(4.3) is the KL divergence between the variational $$q(\theta, \boldm{z}|\gamma, \phi)$$ and true posterior probability $$p(\theta, \boldm{z}, \boldm{w}|\alpha,\beta)$$. Let RHS of Eq.(4.3) $$\delequal$$ $$L(\gamma,\phi;\alpha,\beta)$$ we have
 
-\begin{equation} \label{eq.4.4}
+$$\begin{align} \label{eq.4.4}
     \text{log}p(\boldm{w}|\alpha,\beta) = L(\gamma,\phi;\alpha,\beta) + D_{\text{KL}}(q(\theta, \boldm{z}|\gamma, \phi) \hspace{1mm}||\hspace{1mm} p(\theta, \boldm{z}, \boldm{w}|\alpha,\beta))
-\end{equation}
+\end{align}$$
 
 This shows that maximize $$L(\gamma,\phi;\alpha,\beta) \equalhat$$ minimize $$D_{\text{KL}}$$. We need to find a optimal solutions where:
-\begin{equation} \label{eq.4.3}
+$$\begin{align} \label{eq.4.3}
     (\gamma^\ast,\phi^\ast) = \text{arg} \min_{\gamma,\phi}  \text{D}(q(\theta,\mathbf{z}|\gamma,\phi) || p(\theta,\boldm{z}|\boldm{w},\alpha,\beta)).
-\end{equation}
+\end{align}$$
 
 \subsubsection{Optimize $$L$$}
 Expand \eqref{eq.4.4}:
 
-\begin{equation} \label{eq.4.5}
+$$\begin{align} \label{eq.4.5}
     \begin{align}
         L(\gamma,\phi;\alpha,\beta) &= \text{E}_q[\text{log}p(\theta |\alpha)] + \text{E}_q[\text{log}p(\boldm{z}|\theta)] + \text{E}_q[\text{log}p(\boldm{w}|\boldm{z},\beta)] \\
         &- \text{E}_q[\text{log}p(\theta)] - \text{E}_q[\text{log}p(\boldm{z})]    
     \end{align}
-\end{equation}
+\end{align}$$
 
 Consider the first term:
 \begin{equation*}
@@ -250,7 +241,7 @@ Consider the first term:
 
 Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, otherwise $$z_{n,i} = 0$$. $$p(z_n|\theta)$$ is simply $$\theta_i$$ when $$z_{n,i}=1$$. Let $$p(z_{n,i}|\theta_i) =  \theta_i^{z_{n,i}}$$ for the unique $$i$$ so that: 
 
-\begin{equation} \label{eq.8.5}
+$$\begin{align} \label{eq.8.5}
     \begin{align}
     \text{log}p(z_{n,i}|\theta_i) &= \text{log}\theta_i^{z_{n,i}} \\
     &= {z_{n,i}}\text{log}\theta_i.
@@ -260,7 +251,7 @@ Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n
     % 0, & \text{if } z_{n,i} = 0.
     % \end{cases}
     \end{align}
-\end{equation}
+\end{align}$$
 
 % \[
 % \text{log}p(z_n|\theta) = 
@@ -287,7 +278,7 @@ Expand the second term:
 % $$\text{log}p(\boldm{w|z},\beta) = \text{log}\beta_i^{z_{n,i}.w_{n,j}} = {z_{n,i}.w_{n,j}}\text{log}\theta_i$$.
 Let $$\beta_{ij} = p(w_{n,j}=1|z_i=1)$$, recall that each $$w_n$$ is a vector of size $$V$$ with exactly one component equal to one; we can select the unique $$j$$ such that $$w_{n,j}$$ = 1. Constraint similiarly to \eqref{eq.8.5}, we have:
 
-\begin{equation}
+$$\begin{align}
     \begin{align}
     \text{log}p(\boldm{w|z},\beta) &= \text{log}\beta_{ij}^{z_{n,i}.w_{n,j}} \\
     &= {z_{n,i}.w_{n,j}}\text{log}\beta_{ij}.
@@ -296,7 +287,7 @@ Let $$\beta_{ij} = p(w_{n,j}=1|z_i=1)$$, recall that each $$w_n$$ is a vector of
 %   0  ,& \text{if } z_{n,i}.w_{n,j} = 0.
 %     \end{cases}
     \end{align}
-\end{equation}
+\end{align}$$
 
 
 Third term:
@@ -324,7 +315,7 @@ Expand the fourth term similarly the first term (just change $$\alpha$$ to $$\ga
 % Replace RHS of \eqref{eq.8.4} to $$\text{log}\theta_i$$ in \eqref{eq.8.2} we have $$p(\theta|\alpha)$$, therefore easily infer $$\text{E}_q[\text{log}p(\theta |\alpha)]$$. We can also infer other terms of \eqref{eq.4.5} that include $$\text{log}\theta_i$$. Expand the equation above, each line corresponds to each of five terms of \eqref{eq.4.5}:
 
 Sum up all of those five terms, we have the lower bound:
-\begin{equation}
+$$\begin{align}
     \begin{align}
         L(\gamma,\phi;\alpha,\beta) &= \text{log}\Gamma \Big(\sum^k_{j=1}\alpha_i \Big) - \sum^k_{j=1}\text{log}\Gamma(\alpha_i) + \sum^k_{j=1}(\alpha_i - 1) \Big( \Psi(\gamma_i) - \Psi \Big(\sum^k_{j=1}\gamma_i \Big) \Big)  \\ 
         &+ \sum^N_{n=1}\sum^k_{i=1}\phi_{ni} \Big( \Psi(\gamma_i) - \Psi \Big(\sum^k_{j=1}\gamma_i \Big) \Big) \\
@@ -332,7 +323,7 @@ Sum up all of those five terms, we have the lower bound:
         &- \text{log}\Gamma \Big(\sum^k_{j=1}\gamma_i \Big) + \sum^k_{i=1}\text{log}\Gamma(\gamma_i) - \sum^k_{i=1}(\gamma_i - 1) \Big( \Psi(\gamma_i) - \Psi \Big(\sum^k_{j=1}\gamma_i \Big) \Big) \\
         &- \sum^N_{n=1}\sum^k_{i=1}\phi_{ni}\text{log}\phi_{ni}.
     \end{align}
-\end{equation}
+\end{align}$$
 
 We then maximize the lower bound $$L(\gamma,\phi;\alpha,\beta)$$ w.r.t $$\phi$$ and $$\gamma$$.
 
@@ -351,9 +342,9 @@ Taking derivative of $$L$$ w.r.t $$\phi_{ni}$$:
 
 Set this derivative to zero, we have maximum value of $$\phi_{ni}$$:
 
-\begin{equation}
+$$\begin{align}
     \phi_{ni} \propto \beta_{iw_n}\text{exp}\Big(\Psi(\gamma_i) - \Psi\Big(\sum^k_{j=1}\gamma_i \Big)\Big) 
-\end{equation}
+\end{align}$$
 
 \subsubsection*{Maximize $$L$$ w.r.t $$\gamma$$}
 Keep terms in Eq.(8.4) that contain $$\gamma_i$$:
@@ -373,19 +364,19 @@ Taking derivative of $$L_{[\gamma]}$$ w.r.t $$\gamma_i$$:
 \end{equation*}
 
 $$L_{[\gamma]}$$ is maximum when $$\frac{\partial L}{\partial \gamma_i} = 0$$ at:
-\begin{equation}
+$$\begin{align}
     \gamma_i = \alpha_i + \sum^N_{n=1}\phi_{ni}
-\end{equation}
+\end{align}$$
 
 \subsubsection{Conlusion of E-step}
 The optimal $$\gamma^\ast,\phi^\ast$$ is found: 
-\begin{equation} \label{eq.4.12}
+$$\begin{align} \label{eq.4.12}
     \phi_{ni} \propto \beta_{iw_n}\text{exp}\{\text{E}_q[\text{log}\theta_i|\gamma]\}
-\end{equation}
+\end{align}$$
 
-\begin{equation}
+$$\begin{align}
     \gamma_i = \alpha_i + \sum^N_{n=1}\phi_{ni}
-\end{equation}
+\end{align}$$
 
 Where
 
@@ -398,9 +389,9 @@ with $$\Psi = \frac{d}{dx}\text{log}(\Gamma(x))$$,   the digamma function.
 \subsection{M-step: maximizing the lower bound with respect to parameters $$\alpha, \beta$$}
 With the set of documents $$D$$ $$\{\boldm{w}_d\}^M_{d=1}$$ we wish to find parameters $$\alpha$$ and $$\beta$$ that maximize the log likelihood:
 
-\begin{equation}
+$$\begin{align}
     \ell(\alpha, \beta) = \sum^M_{d=1}\text{log}p(\boldm{w}_d|\alpha, \beta)
-\end{equation}
+\end{align}$$
 
 To maximize with respect to $$\beta$$, we isolate terms and add Lagrange multipliers:
 \begin{equation*}
@@ -424,9 +415,9 @@ Taking the derivative w.r.t $$\alpha_i$$:
 
 This derivative depends on $$\alpha_i$$, where $$j \neq i$$, and we therefore must use an iterative method to find the maximal $$\alpha$$ by linear-scaling Newton-Rhapson algorithm. In particular, the Hessian is in the form:
 
-\begin{equation} \label{eq.hessian}
+$$\begin{align} \label{eq.hessian}
     \frac{\partial^2 L}{\partial^2 \alpha_i} = \delta(i,j)M\Psi'(\alpha_i) - \Psi'\Big(\sum^k_{j=1}\alpha_i \Big).
-\end{equation}
+\end{align}$$
 
 \begin{algorithm}
   \caption{Variational Expectation-Maximization for LDA}\label{VI}
