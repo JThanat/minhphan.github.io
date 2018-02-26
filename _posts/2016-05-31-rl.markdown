@@ -70,7 +70,7 @@ Note that we put the statement of expected value $$\frac{\alpha}{\alpha+\beta}$$
 Now if your friend come to you and tell that he's writting a game for people to roll a 6-sides dice. He has observed that the set of sides  $$\{i\}^{K=6}_{i=1}$$, such that side $$i$$th appears $$\alpha_i$$ times in every sequence of $$\sum^6_{j=1}\alpha_i$$ with the probability of $$\alpha_i/\sum^6_{j=1}\alpha_i$$. This has been drawing a large number of people to play. Now he needs you to develop an algorithm to build such a \enquote{loaded} dice. How can you solve this? You have a set of outcomes of rolling a 6-sides dice $$X=[X_1,X_2,X_3,X_4,X_5,X_6]$$ and you know the prior mean value of each outcome $$\text{E}[X_i] = \alpha_i/\sum^6_{j=1}\alpha_i$$. You wish that if the dice only has 2 sides so you can use Beta distribution to solve your problem right away. Fortunately, this is where the Dirichlet distribution comes to the rescue. It's the expansion form of Beta distribution for $$K > 2$$.
 
 \hfill \break
-With a set of outcomes $$X=[X_1,X_2,\hdots,X_K]$$ be the random pmf, $$X \sim \text{Dir}(\alpha)$$ when:
+With a set of outcomes $$X=[X_1,X_2,\dots,X_K]$$ be the random pmf, $$X \sim \text{Dir}(\alpha)$$ when:
 $$
 \begin{align}
     f(\mathbf{x},\mathbf{\alpha}) &=  \frac{1}{\text{B}(\mathbf{\alpha})} \prod^K_{i=1} x_i^{\alpha_i - 1} \\
@@ -115,17 +115,13 @@ Let $$k$$ be the latent number of topics, $$D$$ be the number of documents and $
 % we can say $$\beta_i$$ represents the multinomial distribution of word $$j$$ for the $$i$$th topic, 
 Given these distributions, the LDA generative process is as follows:
 
-\begin{enumerate}
-    \item For each documents:
-     \begin{enumerate}
-        \item Choose a distribution $$d_1$$ over topics, for example \enquote{70\% topic A, 20\% topic B, 10\% topic C}.
-        \item For each word in the document:
-        \begin{enumerate}
-            \item Draw a topic $$i$$ in one of the $$k$$ topics with a distribution $$d_2$$ conditioned on $$d_1$$. For example, if we pick topic A, the document will have 70\% chance of containing topic A.
-            \item Draw a word amongst many words in topic $$i$$ with a distibution $$d_3$$ conditioned on $$d_2$$.
-        \end{enumerate}
-    \end{enumerate}
-\end{enumerate}
+
+* For each documents:
+    + Choose a distribution $$d_1$$ over topics, for example \enquote{70\% topic A, 20\% topic B, 10\% topic C}.
+    + For each word in the document:
+        + Draw a topic $$i$$ in one of the $$k$$ topics with a distribution $$d_2$$ conditioned on $$d_1$$. For example, if we pick topic A, the document will have 70\% chance of containing topic A.
+        + Draw a word amongst many words in topic $$i$$ with a distibution $$d_3$$ conditioned on $$d_2$$.
+
 
 This model shows that:
 \begin{itemize}
