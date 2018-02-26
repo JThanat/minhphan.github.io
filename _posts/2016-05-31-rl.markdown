@@ -414,10 +414,11 @@ The terms which contain \\\alpha\\ are:
 \end{equation*}
 
 Taking the derivative w.r.t \\\alpha_i\\:
+$$
 \begin{equation*}
     \frac{\partial L}{\partial \alpha_i} = M\Big(\Psi\Big(\sum^k_{j=1}\alpha_i \Big) - \Psi(\alpha_i) \Big) + \sum^M_{d=1}\Big(\Psi(\gamma_{di}) - \Psi \Big(\sum^k_{j=1}\gamma_{dj}\Big) \Big)
 \end{equation*}
-
+$$
 This derivative depends on \\\alpha_i\\, where \\j \neq i\\, and we therefore must use an iterative method to find the maximal \\\alpha\\ by linear-scaling Newton-Rhapson algorithm. In particular, the Hessian is in the form:
 
 \begin{equation} \label{eq.hessian}
