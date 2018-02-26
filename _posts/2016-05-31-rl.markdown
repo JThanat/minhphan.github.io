@@ -72,6 +72,7 @@ Now if your friend come to you and tell that he's writting a game for people to 
 
 
 With a set of outcomes $$X=[X_1,X_2,\dots,X_K]$$ be the random pmf, $$X \sim \text{Dir}(\alpha)$$ when:
+
 $$
 \begin{align}
     f(\mathbf{x},\mathbf{\alpha}) &=  \frac{1}{\text{B}(\mathbf{\alpha})} \prod^K_{i=1} x_i^{\alpha_i - 1} \\
@@ -452,28 +453,29 @@ $$\begin{align} \label{eq.hessian}
 
 ### Why LDA works?
 Allowing topics sparsity and penalize too many topics of a document:
-\begin{itemize}
-    \item When $$\alpha < 1$$, the majority of the probability mass is in the two side-edges of the distribution, generating mostly documents that have only a small number of topics.
 
-    \item When $$\alpha > 1$$, most documents will have almost every topic.
-\end{itemize}
+* When $$\alpha < 1$$, the majority of the probability mass is in the two side-edges of the distribution, generating mostly documents that have only a small number of topics.
+
+* When $$\alpha > 1$$, most documents will have almost every topic.
+
 
 LDA posterior put “topical” words together because of word co-occurences:
-\begin{itemize}
-    \item Word probabilities are maximized by dividing the words among the topics. (More terms means more mass to be spread around.)
-    \item In a mixture, this is enough to find clusters of co-occurring words.
-\end{itemize}
+
+* Word probabilities are maximized by dividing the words among the topics. (More terms means more mass to be spread around.)
+* In a mixture, this is enough to find clusters of co-occurring words.
+
 
 The joint distribution allows our above statements to happen:
+
 $$\begin{align}
     p(\theta,\mathbf{z}|\mathbf{w},\alpha,\beta ) \propto p(\theta, \mathbf{z}|\mathbf{w}|\alpha,\beta) = \underbrace{p(\mathbf{w}|\mathbf{z},\beta)}_\text{1} \underbrace{p(\mathbf{z}|\theta)}_\text{2} \underbrace{p(\theta|\alpha)}_\text{3}
 \begin{align}$$
 
-\begin{enumerate}
-    \item Encourage a sparse $$\beta$$ in order to increase the probability of certain words $$w$$.
-    \item Encourage a sparse $$\theta$$ in order to increase the probability of certain topic $$z$$.
-    \item Using a small $$\alpha$$ will increase the probability of $$\theta$$.
-\end{enumerate}
+
+* Encourage a sparse $$\beta$$ in order to increase the probability of certain words $$w$$.
+* Encourage a sparse $$\theta$$ in order to increase the probability of certain topic $$z$$.
+* Using a small $$\alpha$$ will increase the probability of $$\theta$$.
+
 (1) wants to give form a sparse word clusters, (2) and (3) want to give a small number of topics to a document. The joint distribution encourages a small number of topics but the data itself needs a larger number of topics in order to assign to each document and also to form the diverse topics of all documents. So, as desired, we have a push and pull factor between the joint distribution and the actual data in determining the assignment of topics.
 
 ### LDA's code implementation
