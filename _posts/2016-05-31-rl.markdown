@@ -28,13 +28,13 @@ The purpose of this summary is to 1/ understand main components that build up LD
 
 To understand Dirichlet, let's start with a simpler case where $$K=2$$, the Dirichlet distribution becomes Beta distribution. Let $$X=[X_1,X_2]$$ is the random pmf of $$\text{Beta}(\alpha, \beta)$$. $$X \sim \text{Beta}(\alpha, \beta)$$ when:
 
-
+$$
 \begin{align*}
     f(x;\alpha, \beta) &= \text{Beta}(\alpha, \beta) \\
     &=  \frac{1}{\text{B}(\alpha,\beta)} x^{\alpha -1}(1-x)^{\beta-1} \\
     &= \frac{ \Gamma\big(\alpha + \beta \big)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha -1}(1-x)^{\beta-1},\\
 \end{align*}
-
+$$
 
 You can see that the Bionomial distribution has a similar form $$p^k(1-p)^{n-k}$$:
 \begin{quote}
