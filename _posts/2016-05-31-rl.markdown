@@ -239,9 +239,10 @@ $$
 $$
 
 Let $$z_n$$ the topic assignment of the $$n$$th word in current document. $$z_{n,i} = 1$$ when the topic assignment is the $$i$$th topic, otherwise $$z_{n,i} = 0$$. 
-$$p(z_n|\theta)$$ \text{is simply} $$\theta_i$$ \text{when} $$z_{n,i}=1$$. 
 
-Let $$p(z_{n,i}|\theta_i) =  \theta_i^{z_{n,i}}$$ \text{for the unique} $$i$$ \text{so that}: 
+$$p(z_n|\theta)$$ is simply $$\theta_i$$ when $$z_{n,i}=1$$. 
+
+Let $$p(z_{n,i}|\theta_i) =$$  $$\theta_i^{z_{n,i}}$$ for the unique i so that: 
 
 $$\begin{align} 
 
@@ -494,7 +495,7 @@ $$\begin{align}
 The code is written in C language, Copyright 2004, David M. Blei (blei [at] cs [dot] cmu [dot] edu) and forked from \href{https://github.com/blei-lab/lda-c}{\underline{GitHub}}. 
 
 The code will be explained by top down manner. The main program is directly straighforward, run EM or just inference.
-'''c
+```c
 int main(int argc, char* argv[])
 {
     // (est / inf) alpha k settings data (random / seed/ model) (directory / out)
@@ -532,10 +533,11 @@ int main(int argc, char* argv[])
     return(0);
 }
 
-'''
+```
 
 EM algorithm is straighforward, here we only include important lines, for more details you can look at the entire lda-estimate.c . This step corresponds to line 26-29 in Algorithm~\ref{VI}:
 \lstinputlisting[linerange={111-116,169-200}, caption=**lda-estimate.c},language=c]{Code/lda-estimate.c}
+
 
 This step corresponds to line 16 in Algorithm~\ref{VI}, after the convergence of $$\gamma_d, \phi_d$$:
 \lstinputlisting[linerange={27-59}, caption=**lda-estimate.c},language=c]{Code/lda-estimate.c}
