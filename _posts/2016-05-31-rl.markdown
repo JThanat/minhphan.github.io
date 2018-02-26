@@ -90,9 +90,11 @@ From our new definition, if we have a corpus $$D$$ with $$K$$ topic, to find a d
 
 \hfill \break
 The last thing we might need to consider another aspect of the distribution; its variance:
+
 $$\begin{align}
-    \text{Var}[X] = \ddfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}.
+    \text{Var}[X] &= \ddfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}.
 \begin{align}$$
+
 Let's try some values of $$(\alpha, \beta)$$ on R to see how the shape changes:
 \lstinputlisting[linerange={18-21}, caption=Beta Distribution Illustration,language=R]{Code/R.r}
 
