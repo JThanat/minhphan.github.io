@@ -37,9 +37,7 @@ $$
 $$
 
 You can see that the Bionomial distribution has a similar form $$p^k(1-p)^{n-k}$$:
-\begin{quote}
-    \enquote{the binomial distribution with parameters n and p is the discrete probability distribution of \textbf{the number of successes in a sequence} of n independent experiments, each asking a yes–no question} - Binomial distribution, Wikipedia
-\end{quote}
+> the binomial distribution with parameters n and p is the discrete probability distribution of \textbf{the number of successes in a sequence} of n independent experiments, each asking a yes–no question - Binomial distribution, Wikipedia
 With a fixed $$x_i=p_i$$, $$\alpha-1=k$$, $$\beta-1=n-k$$, we have $$\alpha+\beta=n-2$$ and $$x^{\alpha -1}(1-x)^{\beta-1} \sim p^k(1-p)^{n-k}$$. Now take an example of throwing a coin of two outcomes head $$\{H\}$$ or tail $$\{T\}$$ \enquote{in sequence or continously}. Let a \enquote{biased} coin with $$\alpha = 100, \beta = 200$$, i.e. $$X=[X_1,X_2]=[100 \text{ } H\text{s},200 \text{ } T\text{s}]$$. The probability of a 100 successful outcome $$H$$ in a 300 sequences of throwing coin with a random probability $$x$$ (of only a single success $$H$$) is  Beta($$\alpha,\beta$$). Now, consider its means:
 
 \begin{equation} 
