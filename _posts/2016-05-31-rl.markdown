@@ -110,13 +110,7 @@ For \figref{fig:beta.curve} we can generalize to the Dirichlet distribution that
 
 ### LDA's model
 Let $$k$$ be the latent number of topics, $$D$$ be the number of documents and $$V$$ be the number of terms in the vocabulary. Note that we use $$k$$ not $$K$$ because it's a variable we will sample from the Dirichlet distribution. We use $$\alpha$$ to draw a the distribution of $$k$$ topics over documents $$d$$. And use $$\beta$$ to draw a distribution of topics over words $$w_d$$. We use $$i$$ to index a topic, $$d$$ to index a document, $$j$$ to index a word and $$w$$ to denote a word. In LDA, $$\alpha_{k\times1}$$ and $$\beta_{k\times V}$$ are model parameters, while $$\theta_{D\times k}$$ and $$\mathbf{z}$$ are hidden variables.   
-% We can see that $$\beta$$ has three levels of distribution:  
-% \begin{itemize}
-%     \item $$\beta$$ itself is a distribution of all its $$\beta_i$$, 
-%     \item $$\beta_i$$ is a distribution of topic $$i$$, 
-%     \item $$\beta_{ij}$$ is the probability of word $$j$$ in $$V$$ has the $$i$$th topic. 
-% \end{itemize}
-% we can say $$\beta_i$$ represents the multinomial distribution of word $$j$$ for the $$i$$th topic, 
+
 Given these distributions, the LDA generative process is as follows:
 
 
@@ -265,17 +259,16 @@ $$\begin{align}
 % $$\text{log}p(\mathbf{w|z},\beta) = \text{log}\beta_i^{z_{n,i}.w_{n,j}} = {z_{n,i}.w_{n,j}}\text{log}\theta_i$$.
 Let $$\beta_{ij} = p(w_{n,j}=1|z_i=1)$$, recall that each $$w_n$$ is a vector of size $$V$$ with exactly one component equal to one; we can select the unique $$j$$ such that $$w_{n,j}$$ = 1. Constraint similiarly to \eqref{eq.8.5}, we have:
 
-$$\begin{align}
+$$
+\begin{align}
     \text{log}p(\mathbf{w|z},\beta) &= \text{log}\beta_{ij}^{z_{n,i}.w_{n,j}} \\
     &= {z_{n,i}.w_{n,j}}\text{log}\beta_{ij}.
-%     &= \begin{cases}
-%       1  ,& \text{if } z_{n,i}.w_{n,j} = 1 \\
-%   0  ,& \text{if } z_{n,i}.w_{n,j} = 0.
-%     \end{cases}
-\end{align}$$
+\end{align}
+$$
 
 
 Third term:
+
 $$\begin{align}
         \text{E}_q[\text{log}p(\mathbf{w|z},\beta) &= \sum^N_{n=1} \text{E}_q[\text{log}p(w_n|z_n,\beta)] \\
          &= \sum^N_{n=1}\sum^k_{i=1}\sum^V_{j=1}\text{E}_q[\text{log}p(w_{n,j}|z_{n,i},\beta_{ij})]\\
@@ -293,9 +286,6 @@ $$\begin{align}
     - \sum^k_{i=1}\text{log}\Gamma(\gamma_i) \\
     &- \sum^N_{n=1}\sum^k_{i=1}\phi_{ni}\text{log}\phi_{ni}.
 \end{align}$$
-
-% \hfill \break
-% Replace RHS of \eqref{eq.8.4} to $$\text{log}\theta_i$$ in \eqref{eq.8.2} we have $$p(\theta|\alpha)$$, therefore easily infer $$\text{E}_q[\text{log}p(\theta |\alpha)]$$. We can also infer other terms of \eqref{eq.4.5} that include $$\text{log}\theta_i$$. Expand the equation above, each line corresponds to each of five terms of \eqref{eq.4.5}:
 
 Sum up all of those five terms, we have the lower bound:
 
