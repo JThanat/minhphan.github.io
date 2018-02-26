@@ -446,7 +446,7 @@ $$\begin{align} \label{eq.hessian}
   
 \end{algorithm}
 
-###Why LDA works?
+### Why LDA works?
 Allowing topics sparsity and penalize too many topics of a document:
 \begin{itemize}
     \item When $$\alpha < 1$$, the majority of the probability mass is in the two side-edges of the distribution, generating mostly documents that have only a small number of topics.
@@ -473,23 +473,49 @@ $$\begin{align}
 (1) wants to give form a sparse word clusters, (2) and (3) want to give a small number of topics to a document. The joint distribution encourages a small number of topics but the data itself needs a larger number of topics in order to assign to each document and also to form the diverse topics of all documents. So, as desired, we have a push and pull factor between the joint distribution and the actual data in determining the assignment of topics.
 
 ### LDA's code implementation
-
-% \lstset
-% { %Formatting for code in appendix
-%     language=python,
-%     basicstyle=\footnotesize,
-%     numbers=left,
-%     stepnumber=1,
-%     showstringspaces=false,
-%     tabsize=1,
-%     breaklines=true,
-%     breakatwhitespace=false,
-% }
 The code is written in C language, Copyright 2004, David M. Blei (blei [at] cs [dot] cmu [dot] edu) and forked from \href{https://github.com/blei-lab/lda-c}{\underline{GitHub}}. 
 
 \hfill \break
 The code will be explained by top down manner. The main program is directly straighforward, run EM or just inference.
-\lstinputlisting[linerange={314-349}, caption=**lda-estimate.c},language=c]{Code/lda-estimate.c}
+'''c
+int main(int argc, char* argv[])
+{
+    // (est / inf) alpha k settings data (random / seed/ model) (directory / out)
+
+    corpus* corpus;
+
+    long t1;
+    (void) time(&t1);
+    seedMT(t1);
+    // seedMT(4357U);
+
+    if (argc > 1)
+    {
+        if (strcmp(argv[1], "est")==0)
+        {
+            INITIAL_ALPHA = atof(argv[2]);
+            NTOPICS = atoi(argv[3]);
+            read_settings(argv[4]);
+            corpus = read_data(argv[5]);
+            make_directory(argv[7]);
+            run_em(argv[6], argv[7], corpus);
+        }
+        if (strcmp(argv[1], "inf")==0)
+        {
+            read_settings(argv[2]);
+            corpus = read_data(argv[4]);
+            infer(argv[3], argv[5], corpus);
+        }
+    }
+    else
+    {
+        printf("usage : lda est [initial alpha] [k] [settings] [data] [random/seeded/manual=filename/*] [directory]\n");
+        printf("        lda inf [settings] [model] [data] [name]\n");
+    }
+    return(0);
+}
+
+'''
 
 EM algorithm is straighforward, here we only include important lines, for more details you can look at the entire lda-estimate.c . This step corresponds to line 26-29 in Algorithm~\ref{VI}:
 \lstinputlisting[linerange={111-116,169-200}, caption=**lda-estimate.c},language=c]{Code/lda-estimate.c}
